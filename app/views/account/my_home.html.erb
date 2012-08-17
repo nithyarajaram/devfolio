@@ -1,0 +1,12 @@
+<h1>My Portfolio</h1>
+<% if @user.portfolio != nil %>
+<p><%= @user.email %></p>
+<p><%= @user.portfolio.location %></p>
+<p><%= @user.description %></p>
+
+<% else %>
+
+  <p>Portfolio is empty</p>
+  <p><%= link_to "Create One Now!", new_portfolio_path %>
+
+<% end %> 

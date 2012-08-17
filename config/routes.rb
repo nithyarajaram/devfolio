@@ -1,5 +1,14 @@
 Devfolio::Application.routes.draw do
+  get "account/my_home"
+
+  get "portfolio/index"
+
+  get "portfolio/new"
+
   get "home/index"
+
+  get "account/my_home"
+
 
   devise_for :users
 
@@ -7,6 +16,12 @@ Devfolio::Application.routes.draw do
   # first created -> highest priority.
 
   root :to => "home#index"
+
+  resources :portfolio
+  resources :account 
+
+  #match "/account/my_home" => "account#index"
+
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  location: MyString
+  budget: 1.5
+  description: MyText
+  githuburl: MyString
+
+two:
+  name: MyString
+  location: MyString
+  budget: 1.5
+  description: MyText
+  githuburl: MyString

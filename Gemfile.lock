@@ -113,7 +113,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
-  devise (= 2.0.4)
+  devise
   jquery-rails
   rails (= 3.2.8.rc2)
   sass-rails (~> 3.2.3)

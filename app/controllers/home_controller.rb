@@ -1,5 +1,9 @@
 class HomeController < ApplicationController
+ 
   def index
-    @users = User.find(:all)
+   # @users = User.includes(:portfolio).all
+    @portfolios = Portfolio.find(:all)
   end
+ 
 end
+
