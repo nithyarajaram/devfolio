@@ -1,23 +1,25 @@
 Devfolio::Application.routes.draw do
   get "account/my_home"
 
-  get "portfolio/index"
+  #get "portfolio/index"
 
-  get "portfolio/new"
+  #get "portfolio/new"
 
-  get "home/index"
+  #get "home/index"
 
-  get "account/my_home"
+  #get "account/my_home"
 
 
-  devise_for :users
+  devise_for :users do
+     resources :portfolios
+ end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
   root :to => "home#index"
 
-  resources :portfolio
+ 
   resources :account 
 
   #match "/account/my_home" => "account#index"
