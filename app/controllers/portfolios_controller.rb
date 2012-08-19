@@ -1,5 +1,7 @@
 class PortfoliosController < ApplicationController
 
+  before_filter :authenticate_user!
+
   def index
     @portfolios = Portfolio.find(:all)
   end
@@ -10,10 +12,8 @@ class PortfoliosController < ApplicationController
   end  
 
   def create
-    
     @portfolio = Portfolio.new(params[:portfolio])
     @portfolio.user = current_user
-   
     
     if @portfolio.save
       flash[:notice] = "Your portfolio is created"
@@ -26,6 +26,14 @@ class PortfoliosController < ApplicationController
 
   def show
     @portfolio = Portfolio.find(params[:id])
+  end 
+
+  def update
+   @portfolio= Portfolio.find(params[:id])
+   @portflio.update_attributes(params[:portfolio])
+  end
+
+  def edit
   end  
 
 end
