@@ -24,34 +24,34 @@ class PortfoliosController < ApplicationController
     else
       render new_portfolio_path, :notice => "Please try again"
     end  
-    
   end  
 
   def show
   end 
 
   def update
-  
    if @portfolio.update_attributes(params[:portfolio])
-     redirect_to account_my_home_path, :notice => "Your portfolio is updated"
+    redirect_to account_my_home_path, :notice => "Your portfolio is updated"
    else
     redirect_to edit_portfolio_path, :notice => "Please try again"
    end  
   end
 
-  
-
   def edit
   end
 
   def destroy
-   if @portfolio.destroy
-   redirect_to account_my_home_path, :notice => "Your portfolio is deleted"
+    if @portfolio.destroy
+      redirect_to account_my_home_path, :notice => "Your portfolio is deleted"
     end
   end 
 
   def get_portfolio
-  @portfolio = Portfolio.find(params[:id])
+    portfolio = Portfolio.find(params[:id])
+  end 
+
+  def portfolio_filter
+    @portfolios = Portfolio.where((location: params[:location], budget: params[:location])
   end  
 
 end
