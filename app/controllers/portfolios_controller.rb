@@ -1,4 +1,6 @@
 class PortfoliosController < ApplicationController
+  
+  include Carmen
 
   before_filter :authenticate_user!
   before_filter :get_portfolio, :only => [:show, :edit, :update, :destroy]
@@ -45,8 +47,6 @@ class PortfoliosController < ApplicationController
   def destroy
    if @portfolio.destroy
    redirect_to account_my_home_path, :notice => "Your portfolio is deleted"
-   else
-     redirect_to account_my_home_path, :notice => "Deletion could not be completed. Please try again"
     end
   end 
 

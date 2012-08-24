@@ -11,7 +11,7 @@ gem 'devise'
 gem "pg", :group => :production
 gem "sqlite3", :group => :development
 
-
+gem 'carmen-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
