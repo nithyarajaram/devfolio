@@ -22,12 +22,13 @@
     <ul class="thumbnails">
       <li class="span3">
       
-     <a class="thumbnail" href="#">
+     <div class="thumbnail">
        <h5><%= p.user.email %></h5>
         <p> Location:  <%= p.location %></p>
         <p> Budget:  <%= p.budget %></p>
         <p> About Me: <%= p.description %></p>
-      </a>
+        <p><%= link_to "More Details", portfolio_path(p)%>
+      </div>
    </li>
  </ul>
  <% end %>
