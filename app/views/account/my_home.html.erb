@@ -3,6 +3,7 @@
   <%= link_to "Edit your portfolio", edit_portfolio_path(@user.portfolio) %> | <%= link_to "Delete portfolio", @user.portfolio, :method => :delete, :confirm => "Are you sure?" %><br/><br/>
 <p><%= @user.email %></p>
 <p><%= @user.portfolio.location %></p>
+<p><%= @user.portfolio.budget %></p>
 <p><%= @user.portfolio.description %></p>
 
 <% else %>
