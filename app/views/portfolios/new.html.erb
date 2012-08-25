@@ -1,22 +1,2 @@
-<%= form_for @portfolio do |p|%>
+<%= render 'form' %>
 
-  <%= p.label :budget %>
-
-  <%= p.radio_button :budget, 'Less than $100/hr'%><%= p.label :budget,'Less than $100/hr', :value => 'Less than $100/hr' %>
-  
-  <%= p.radio_button :budget, 'Between $100 & $300/hour' %><%= p.label :budget,'Between $100 & $300/hour', :value => 'Between $100 & $300/hour' %>
-  
-  <%= p.radio_button :budget, 'More than $300/hr'%><%= p.label :budget,'More than $300/hr', :value => 'More than $300/hr' %>
-
-  
-  <%= p.label :location, "Location" %><br />
-  <%= p.country_select :location, prompt: 'Please select a country' %>
- 
-  <%= p.label :githuburl %><br/>
-  <%= p.text_field :githuburl %><br/>
-
-  <%= p.label :description %><br/>
-  <%= p.text_area :description %><br/>
-
-  <%= p.submit %>
-<% end %>
