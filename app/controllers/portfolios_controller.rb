@@ -27,9 +27,11 @@ class PortfoliosController < ApplicationController
   end  
 
   def show
+    @portfolio = Portfolio.find(params[:id])
   end 
 
   def update
+    @portfolio = Portfolio.find(params[:id])
    if @portfolio.update_attributes(params[:portfolio])
     redirect_to account_my_home_path, :notice => "Your portfolio is updated"
    else
@@ -38,9 +40,11 @@ class PortfoliosController < ApplicationController
   end
 
   def edit
+    @portfolio = Portfolio.find(params[:id])
   end
 
   def destroy
+    @portfolio = Portfolio.find(params[:id])
     if @portfolio.destroy
       redirect_to account_my_home_path, :notice => "Your portfolio is deleted"
     end
@@ -50,8 +54,8 @@ class PortfoliosController < ApplicationController
     portfolio = Portfolio.find(params[:id])
   end 
 
-  def portfolio_filter
-    @portfolios = Portfolio.where((location: params[:location], budget: params[:location])
-  end  
+  #def portfolio_filter
+   # @portfolios = Portfolio.where(:location == '#{params[:location]}' && :budget == '#{params[:budget]}')
+  #end  
 
 end
