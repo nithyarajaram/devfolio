@@ -22,7 +22,9 @@
     <ul class="thumbnails">
       <li class="span3">
       
-     <div class="thumbnail">
+      <div class="thumbnail">
+
+        <p style="text-align:left"> <%=image_tag p.user.gravatar_url %></p>
        <h5><%= p.user.email %></h5>
         <p> Location:  <%= p.location %></p>
         <p> Budget:  <%= p.budget %></p>
