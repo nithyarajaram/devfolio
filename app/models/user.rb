@@ -12,4 +12,13 @@ class User < ActiveRecord::Base
   gravtastic 
   
   has_one :portfolio, dependent: :destroy, :foreign_key => "user_id"
+
+  after_create :welcome_mail
+
+  private
+
+  def welcome_mail
+    UserNotifier.welcome(self).deliver
+  end
+
 end
