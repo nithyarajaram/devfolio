@@ -2,7 +2,7 @@ class PortfoliosController < ApplicationController
   
   include Carmen
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
   before_filter :get_portfolio, :only => [:show, :edit, :update, :destroy]
 
   def index
