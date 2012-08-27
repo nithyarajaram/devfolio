@@ -12,9 +12,50 @@
   </div> 
 
  <div class="page-header">
-   <h1>Pick your choice of developer here! <%= link_to "Location" %> | <%= link_to "Budget" %></h1>
-</div> 
+   <h1>Pick your choice of developer here! 
 
+       | <%= link_to "Budget" %></h1></span>
+ </div>
+
+<ul id="nav">
+    <li class="menu">
+        <span><a href="#">Budget</a></span>
+        <ul class="dropdown">
+            <% @portfolios_budget.each do |p| %>
+              <li><a><%= p.budget %></a></li>
+            <% end %>  
+        </ul>
+    </li>
+    <li class="menu">
+        <span><a href="#">Location</span>
+          <ul class="dropdown">
+            <% @portfolios_location.each do |portfolio| %>
+              <li><a><%= portfolio.location %></a></li>
+            <% end %>  
+        </ul>
+    </li>
+</ul>
+
+
+<script>
+var nav = $('#nav');
+nav.find('ul.dropdown').hide();
+
+$(document).bind('click', function(e) {
+    var target = $( e.target );
+    if ( target.closest('#nav').length < 1 ) {
+        nav.find('ul.dropdown').hide();
+        return;
+    }
+    if ( target.parent().is('span') ) {
+        var li = target.closest('li.menu');
+        li.siblings().find('ul.dropdown').hide();
+        li.find('ul.dropdown').toggle();
+        e.preventDefault();
+    }
+})
+
+</script>
       
    
     <% @portfolios.each do |p| %>
