@@ -1,78 +1,106 @@
 
-
-
- <div class="hero-unit">
-      <h1>Welcome to Devfolio</h1>
+  <div class="hero-unit">
+    <h1>Welcome to Devfolio</h1>
       <p>Showcase your developer portfolio to get hired</p>
       <p>
-        <a class="btn btn-primary btn-large" href="/users/sign_up">
-           Create your portfolio now!
-        </a>
+        <a class="btn btn-primary btn-large" href="/users/sign_up">Create your portfolio now!</a>
       </p>
   </div> 
 
- <div class="page-header">
-   <h1>Pick your choice of developer here! 
+  <div class="page-header">
+    <h1>Pick your choice of developer here! | <%= link_to "Budget" %></h1></span>
+  </div>
 
-       | <%= link_to "Budget" %></h1></span>
- </div>
-
-<ul id="nav">
+  <ul id="nav">
     <li class="menu">
-        <span><a href="#">Budget</a></span>
+      <span><a href="#">Budget</a></span>
+      <ul class="dropdown">
+        <li><a id = "budget">Any</a></li>
+          <% @portfolios_budget.each do |p| %>
+            <li><a id = "budget"><%= p.budget %></a></li>
+          <% end %>  
+        </ul>
+    </li>
+    <li class="menu">
+    <span><a href="#">Location</a></span>
         <ul class="dropdown">
-            <% @portfolios_budget.each do |p| %>
-              <li><a><%= p.budget %></a></li>
-            <% end %>  
+          <li><a id = "location">Any</a></li>
+          <% @portfolios_location.each do |portfolio| %>
+            <li><a id = "location"><%=portfolio.location%></a></li>
+          <% end %>  
         </ul>
     </li>
-    <li class="menu">
-        <span><a href="#">Location</span>
-          <ul class="dropdown">
-            <% @portfolios_location.each do |portfolio| %>
-              <li><a><%= portfolio.location %></a></li>
-            <% end %>  
-        </ul>
-    </li>
-</ul>
+  </ul>
 
 
-<script>
-var nav = $('#nav');
-nav.find('ul.dropdown').hide();
+  <%= select("location", 'portfolio_id', @portfolios_location.collect {|p| [p.location] }, {:prompt => "Select Location", :include_blank => 'Any'})%>
+  <%= select("budget", 'portfolio_id', @portfolios_budget.collect {|p| [p.budget] }, {:include_blank =>'Any', :prompt => "Select Budget"})%>
+ 
+  <script>
+    var nav = $('#nav');
+    nav.find('ul.dropdown').hide();
 
-$(document).bind('click', function(e) {
-    var target = $( e.target );
-    if ( target.closest('#nav').length < 1 ) {
-        nav.find('ul.dropdown').hide();
+    $(document).bind('click', function(e) {
+      var target = $( e.target );
+      $(this).addClass('active');
+        if ( target.closest('#nav').length < 1 ) {
+          nav.find('ul.dropdown ').hide();
         return;
     }
-    if ( target.parent().is('span') ) {
-        var li = target.closest('li.menu');
-        li.siblings().find('ul.dropdown').hide();
-        li.find('ul.dropdown').toggle();
-        e.preventDefault();
+    if( target.parent().is('span') ) {
+      var li = target.closest('li.menu');
+      li.siblings().find('ul.dropdown').hide();
+      li.find('ul.dropdown').toggle();
+      e.preventDefault();
     }
-})
-
-</script>
-      
-   
+    });
+  </script>
+  
+  <script>
+    $('li.menu ul.dropdown li a#budget').click(function(e){
+    e.preventDefault();
+    var value1 = $(this).text();
+    var value2 = $('a#location').text();
+      $.ajax({
+        url: $(this).attr('href'),
+        type:'POST',
+        data: {budget:value1},
+        data: {loc:value2},
+        success: function(html){
+          $('div.thumbnail').replaceWith($('div.thumbnail', $(html)));
+        }
+      }); 
+    });     
+  </script>
+ 
+  <script>
+    $('li.menu ul.dropdown li a#location').click(function(e){
+    e.preventDefault();
+    var value = $(this).text();
+      $.ajax({
+        url: $(this).attr('href'),
+        type:'POST',
+        data: {loc:value},
+        success: function(html){
+          $('div.thumbnail').replaceWith($('div.thumbnail', $(html)));
+        }
+      }); 
+    });     
+  </script>
+ 
+  <div class="thumbnail">
     <% @portfolios.each do |p| %>
-    <% if p.user_id != nil %>
-    <ul class="thumbnails">
-      <li class="span3">
-      
-      <div class="thumbnail">
-
-        <p style="text-align:left"> <%=image_tag p.user.gravatar_url %></p>
-       <h3><%= p.user.email %></h3>
-        <p> Location:  <%= p.location %></p>
-        <p> Budget:  <%= p.budget %></p>
-        <p> About Me: <%= p.description %></p>
-        <p><%= link_to "More Details", portfolio_path(p)%>
-      </div>
-   </li>
- </ul>
- <% end %>
- <% end %>
+      <% if p.user_id != nil %>
+        <ul class="thumbnails">
+          <li class="span3">
+            <p style="text-align:left"> <%=image_tag p.user.gravatar_url %></p>
+            <h3><%= p.user.email %></h3>
+            <p> Location:  <%= p.location %></p>
+            <p> Budget:  <%= p.budget %></p>
+            <p> About Me: <%= p.description %></p>
+            <p><%= link_to "More Details", portfolio_path(p)%>
+          </li>
+        </ul>
+      <% end %>
+  <% end %>
+ </div>

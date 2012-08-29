@@ -54,8 +54,10 @@ class PortfoliosController < ApplicationController
     portfolio = Portfolio.find(params[:id])
   end 
 
-  #def portfolio_filter
-   # @portfolios = Portfolio.where(:location == '#{params[:location]}' && :budget == '#{params[:budget]}')
-  #end  
+  def portfolio_filter
+    budget = params[:value]
+    @portfolios = Portfolio.where(:budget == '#{params[:value]}')
+    #@portfolios = Portfolio.where(:location == '#{params[:location]}' && :budget == '#{params[:budget]}')
+  end  
 
 end
