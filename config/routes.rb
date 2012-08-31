@@ -1,7 +1,7 @@
 Devfolio::Application.routes.draw do
   get "account/my_home"
 
-  get "portfolios/portfolio_filter"
+  post "home/search_by_filter"
 
   #get "portfolio/index"
 

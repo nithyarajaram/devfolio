@@ -1,18 +1,7 @@
 class HomeController < ApplicationController
  
   def index
-    if request.post?
-      budget ||= params[:budget]
-      location ||= params[:loc]
-      puts budget
-      puts location
-      if budget == 'Any'
-        @portfolios = Portfolio.where(:location => location)
-      end  
-      @portfolios = Portfolio.where(:budget =>budget, :location => location) 
-    else
-      @portfolios = Portfolio.includes(:user).all
-    end  
+    @portfolios = Portfolio.includes(:user).all
     @portfolios_location = location_list
     @portfolios_budget = budget_list
   end
@@ -23,7 +12,21 @@ class HomeController < ApplicationController
   
   def budget_list
      Portfolio.select("distinct(budget)").where("budget IS NOT NULL").each {|portfolio| portfolio.budget} 
-  end   
- 
-end
+  end
 
+  def search_by_filter
+    budget = params[:budget]
+    location = params[:loc]
+
+    if budget.blank?
+      @portfolios = Portfolio.where(:location => location)
+    elsif location.blank?
+      @portfolios = Portfolio.where(:budget => budget)
+    elsif (budget.blank? && location.blank?)
+      @portfolios = Portfolio.find(:all)
+    else
+      @portfolios = Portfolio.where(:budget => budget, :location => location)
+    end  
+  end
+
+end

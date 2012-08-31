@@ -5,82 +5,44 @@
       <p>
         <a class="btn btn-primary btn-large" href="/users/sign_up">Create your portfolio now!</a>
       </p>
-  </div> 
+    </div> 
 
   <div class="page-header">
-    <h1>Pick your choice of developer here! | <%= link_to "Budget" %></h1></span>
+    <h1>Pick your choice of developer here! </h1></span>
+</div>
+
+  <div> 
+    <%=select("location", 'portfolio_id', @portfolios_location.collect {|p| [p.location] }, {:prompt => "Select Location", :include_blank => 'Any'}) %>
+    <%= select("budget", 'portfolio_id', @portfolios_budget.collect {|p| [p.budget] }, {:include_blank =>'Any', :prompt => "Select Budget"})%>
+    <%= select("skill", 'portfolio_id', @portfolios_budget.collect {|p| [p.budget] }, {:include_blank =>'Any', :prompt => "Select Skill"})%>
   </div>
+    
 
-  <ul id="nav">
-    <li class="menu">
-      <span><a href="#">Budget</a></span>
-      <ul class="dropdown">
-        <li><a id = "budget">Any</a></li>
-          <% @portfolios_budget.each do |p| %>
-            <li><a id = "budget"><%= p.budget %></a></li>
-          <% end %>  
-        </ul>
-    </li>
-    <li class="menu">
-    <span><a href="#">Location</a></span>
-        <ul class="dropdown">
-          <li><a id = "location">Any</a></li>
-          <% @portfolios_location.each do |portfolio| %>
-            <li><a id = "location"><%=portfolio.location%></a></li>
-          <% end %>  
-        </ul>
-    </li>
-  </ul>
-
-
-  <%= select("location", 'portfolio_id', @portfolios_location.collect {|p| [p.location] }, {:prompt => "Select Location", :include_blank => 'Any'})%>
-  <%= select("budget", 'portfolio_id', @portfolios_budget.collect {|p| [p.budget] }, {:include_blank =>'Any', :prompt => "Select Budget"})%>
- 
   <script>
-    var nav = $('#nav');
-    nav.find('ul.dropdown').hide();
-
-    $(document).bind('click', function(e) {
-      var target = $( e.target );
-      $(this).addClass('active');
-        if ( target.closest('#nav').length < 1 ) {
-          nav.find('ul.dropdown ').hide();
-        return;
-    }
-    if( target.parent().is('span') ) {
-      var li = target.closest('li.menu');
-      li.siblings().find('ul.dropdown').hide();
-      li.find('ul.dropdown').toggle();
-      e.preventDefault();
-    }
-    });
-  </script>
-  
-  <script>
-    $('li.menu ul.dropdown li a#budget').click(function(e){
-    e.preventDefault();
-    var value1 = $(this).text();
-    var value2 = $('a#location').text();
+    $('#budget_portfolio_id').change(function(){
+      var value1 = $(this).val();
+      var value2 = $('#location_portfolio_id').val();
       $.ajax({
-        url: $(this).attr('href'),
+        url: "home/search_by_filter",
         type:'POST',
-        data: {budget:value1},
-        data: {loc:value2},
+        data: {budget:value1, 
+               loc:value2},
         success: function(html){
           $('div.thumbnail').replaceWith($('div.thumbnail', $(html)));
         }
       }); 
     });     
   </script>
- 
-  <script>
-    $('li.menu ul.dropdown li a#location').click(function(e){
-    e.preventDefault();
-    var value = $(this).text();
+
+   <script>
+    $('#location_portfolio_id').change(function(){
+      var value1 = $(this).val();
+      var value2 = $('#budget_portfolio_id').val();
       $.ajax({
-        url: $(this).attr('href'),
+        url: "/home/search_by_filter",
         type:'POST',
-        data: {loc:value},
+        data: {loc:value1,
+               budget: value2},
         success: function(html){
           $('div.thumbnail').replaceWith($('div.thumbnail', $(html)));
         }
