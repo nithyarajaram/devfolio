@@ -18,14 +18,14 @@ class HomeController < ApplicationController
     budget = params[:budget]
     location = params[:loc]
 
-    if budget.blank?
+    if budget.blank? && !location.blank?
       @portfolios = Portfolio.where(:location => location)
-    elsif location.blank?
+    elsif location.blank? && !budget.blank?
       @portfolios = Portfolio.where(:budget => budget)
+    elsif (!budget.blank? && !location.blank?)
+      @portfolios = Portfolio.where(:budget => budget, :location => location)
     elsif (budget.blank? && location.blank?)
       @portfolios = Portfolio.find(:all)
-    else
-      @portfolios = Portfolio.where(:budget => budget, :location => location)
     end  
   end
 
