@@ -22,7 +22,8 @@ Devfolio::Application.routes.draw do
   root :to => "home#index"
 
  
-  resources :account 
+  resources :account
+  resources :skills 
 
   #match "/account/my_home" => "account#index"
 

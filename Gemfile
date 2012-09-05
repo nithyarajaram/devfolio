@@ -15,6 +15,7 @@ gem 'carmen-rails'
 gem 'gravtastic'
 gem 'custom_error_message'
 gem 'carrierwave'
+gem 'rmagick'
 
 # Gems used only for assets and not required
 # in production environments by default.
