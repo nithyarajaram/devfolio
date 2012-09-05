@@ -1,4 +1,16 @@
+
 <%= form_for @portfolio do |p|%>
+
+  <% if @portfolio.errors.any? %>  
+  <div id="errorExplanation">  
+    <h2><%= pluralize(@portfolio.errors.count, "error") %> prohibited this portfolio from being saved:</h2>  
+    <ul>  
+    <% @portfolio.errors.full_messages.each do |msg| %>  
+      <li><%= msg %></li>  
+    <% end %>  
+    </ul>  
+  </div>  
+<% end %>
 
   <%= p.label :budget %>
 
@@ -8,9 +20,16 @@
   
   <%= p.radio_button :budget, 'More than $300/hr'%><%= p.label :budget,'More than $300/hr', :value => 'More than $300/hr' %>
 
-  
+  <% if @portfolio.location? %>
+  <%= p.label :location, "Location" %><br />
+  <%= p.country_select :location, {priority: [Carmen::Country.named("#{@portfolio.location}").alpha_2_code] }%>
+
+<% else %>
+
   <%= p.label :location, "Location" %><br />
   <%= p.country_select :location, prompt: 'Please select a country' %>
+
+<% end %>
  
   <%= p.label :githuburl %><br/>
   <%= p.text_field :githuburl %><br/>

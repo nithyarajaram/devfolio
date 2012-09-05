@@ -11,7 +11,14 @@ class PortfoliosController < ApplicationController
 
   def new
     @user = current_user
+
+    if @user.portfolio
+      flash[:notice] = "You already have a portfolio"
+      redirect_to portfolio_path(@user.portfolio)
+    else 
     @portfolio = Portfolio.new 
+    end
+
   end  
 
   def create
@@ -32,22 +39,34 @@ class PortfoliosController < ApplicationController
 
   def update
     @portfolio = Portfolio.find(params[:id])
-   if @portfolio.update_attributes(params[:portfolio])
-    redirect_to account_my_home_path, :notice => "Your portfolio is updated"
-   else
-    redirect_to edit_portfolio_path, :notice => "Please try again"
-   end  
+     if current_user.id != @portfolio.user_id
+      flash[:notice] = "You cannot edit somebody else's portfolio"
+      redirect_to root_path
+     end
+
+    @portfolio.update_attributes(params[:portfolio])
+    flash[:notice] = "Your account is updated"
+    redirect_to root_path 
   end
 
   def edit
     @portfolio = Portfolio.find(params[:id])
+     
+    if current_user.id != @portfolio.user_id
+      flash[:notice] = "You cannot edit somebody else's portfolio"
+      redirect_to root_path
+    end  
+
   end
 
   def destroy
     @portfolio = Portfolio.find(params[:id])
-    if @portfolio.destroy
+     if session[:user] != @portfolio.user
+      flash[:notice] = "You cannot edit somebody else's portfolio"
+      redirect_to root_path
+     else @portfolio.destroy
       redirect_to account_my_home_path, :notice => "Your portfolio is deleted"
-    end
+     end
   end 
 
   def get_portfolio
@@ -58,6 +77,7 @@ class PortfoliosController < ApplicationController
     budget = params[:value]
     @portfolios = Portfolio.where(:budget == '#{params[:value]}')
     #@portfolios = Portfolio.where(:location == '#{params[:location]}' && :budget == '#{params[:budget]}')
-  end  
+  end 
+
 
 end

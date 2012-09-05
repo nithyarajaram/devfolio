@@ -1,6 +1,6 @@
 <h1>My Portfolio</h1>
 <% if @user.portfolio != nil %>
-  <%= link_to "Edit your portfolio", edit_portfolio_path(@user.portfolio) %> | <%= link_to "Delete portfolio", @user.portfolio, :method => :delete, :confirm => "Are you sure?" %><br/><br/>
+  <%= link_to "Edit", edit_portfolio_path(@user.portfolio) %> | <%= link_to "Delete", @user.portfolio, :method => :delete, :confirm => "Are you sure?" %> | <%= link_to "View", portfolio_path(@user.portfolio)%><br/><br/>
 <p><%= @user.email %></p>
 <p><%= @user.portfolio.budget %></p>
 <p><%= @user.portfolio.description %></p>

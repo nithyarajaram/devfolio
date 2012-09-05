@@ -13,6 +13,8 @@ gem "sqlite3", :group => :development
 
 gem 'carmen-rails'
 gem 'gravtastic'
+gem 'custom_error_message'
+gem 'carrierwave'
 
 # Gems used only for assets and not required
 # in production environments by default.
