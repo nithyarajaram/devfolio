@@ -1,0 +1,7 @@
+<%= form_for @skill, :html => {:multipart => true} do |f| %>
+  <p>
+    <label>Add Icon for Skill</label>
+    <%= f.file_field :icon %>
+    </p>  
+    <p> <%= f.submit "upload" %></p>
+<% end %>
